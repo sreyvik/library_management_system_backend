@@ -2,7 +2,7 @@
   "name": "library_management_system_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon --exec ts-node src/server.ts",
     "dev": "nodemon --exec ts-node dist/server.js",
@@ -15,20 +15,31 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/sreyvik/library_management_system_backend/issues"
   },
   "homepage": "https://github.com/sreyvik/library_management_system_backend#readme",
   "dependencies": {
+    "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.10.1",
     "mysql2": "^3.22.3",
-    "nodemon": "^3.1.14",
     "route": "^0.2.5",
-    "tsc-config": "^0.0.1"
+    "tsc-config": "^0.0.1",
+    "winston": "^3.19.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^25.9.1",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
   }
 }
