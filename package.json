@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec ts-node src/server.ts",
-    "dev": "nodemon --exec ts-node dist/server.js",
+    "start": "nodemon src/server.ts",
+    "dev": "nodemon  dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,7 +15,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "bugs": {
     "url": "https://github.com/sreyvik/library_management_system_backend/issues"
   },

@@ -12,20 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-const port_1 = require("./configs/port");
-const db_1 = require("./configs/db");
-const logger_1 = require("./configs/logger");
-const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, db_1.testConnection)();
-        app_1.default.listen(port_1.PORT, () => {
-            logger_1.logger.info(`Server running on http://localhost:${port_1.PORT}`);
+const app_1 = __importDefault(require("./app.js"));
+const port_1 = require("./configs/port.js");
+const logger_1 = require("./configs/logger.js");
+const db_1 = __importDefault(require("./configs/db.js"));
+class Server {
+    start() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield db_1.default.connect();
+                app_1.default.listen(port_1.PORT, () => {
+                    logger_1.logger.info(`Server running on http://localhost:${port_1.PORT}`);
+                });
+            }
+            catch (error) {
+                logger_1.logger.error(`Server failed to start: ${error.message}`);
+                process.exit(1);
+            }
         });
     }
-    catch (error) {
-        logger_1.logger.error("Server failed to start: " + error.message);
-        process.exit(1);
-    }
-});
-startServer();
+}
+const server = new Server();
+server.start();

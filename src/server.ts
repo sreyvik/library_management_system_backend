@@ -1,16 +1,30 @@
 import app from "./app";
 
-const startServer = async () => {
-  try {
-    await testConnection();
+import { PORT } from "./configs/port";
+import { logger } from "./configs/logger";
+import Database from "./configs/db";
 
-    app.listen(PORT, () => {
-      logger.info(`Server running on http://localhost:${PORT}`);
-    });
-  } catch (error: any) {
-    logger.error("Server failed to start: " + error.message);
-    process.exit(1);
-  }
-};
+class Server {
 
-startServer();
+    public async start(): Promise<void> {
+
+        try {
+
+            await Database.connect();
+
+            app.listen(PORT, () => {
+                logger.info(`Server running on http://localhost:${PORT}`);
+            });
+
+        } catch (error: any) {
+
+            logger.error(`Server failed to start: ${error.message}`);
+
+            process.exit(1);
+        }
+    }
+}
+
+const server = new Server();
+
+server.start();
