@@ -14,4 +14,23 @@ const db = mysql.createPool({
     connectionLimit: 10
 });
 
+<<<<<<< HEAD
 export default db;
+=======
+export async function initializeDatabase(): Promise<void> {
+    await db.query(`
+        CREATE TABLE IF NOT EXISTS borrowings (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            member_id INT NOT NULL,
+            book_id INT NOT NULL,
+            borrow_date DATE NOT NULL,
+            due_date DATE NOT NULL,
+            return_date DATE NULL,
+            status ENUM('Borrowed', 'Returned', 'Late') NOT NULL DEFAULT 'Borrowed',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
+}
+
+export default db;
+>>>>>>> feat/develop

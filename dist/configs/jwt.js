@@ -3,7 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 exports.jwtConfig = exports.verifyToken = exports.generateToken = void 0;
+=======
+exports.verifyToken = exports.generateToken = void 0;
+>>>>>>> feat/develop
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const env_1 = require("./env");
 const generateToken = (payload) => {
@@ -16,7 +20,10 @@ const verifyToken = (token) => {
     return jsonwebtoken_1.default.verify(token, env_1.env.JWT_SECRET);
 };
 exports.verifyToken = verifyToken;
+<<<<<<< HEAD
 exports.jwtConfig = {
     secret: process.env.JWT_SECRET || "secret",
     expiresIn: process.env.JWT_EXPIRES_IN || "1d",
 };
+=======
+>>>>>>> feat/develop

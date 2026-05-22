@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import borrowingRoutes from "./routes/borrow.routes";
+import dashboardRoutes from "./routes/dashboard.routes";
 
 import authRoutes from "./routes/auth.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
@@ -38,6 +40,7 @@ app.get("/", (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 app.get("/api", (req, res) => {
   return res.status(200).json({
     success: true,
@@ -56,5 +59,12 @@ app.use((req, res) => {
 });
 
 app.use(errorMiddleware);
+=======
+app.use("/api", borrowingRoutes);
+app.use("/api", dashboardRoutes);
+app.use("/", borrowingRoutes);
+app.use("/", dashboardRoutes);
+
+>>>>>>> feat/develop
 
 export default app;
