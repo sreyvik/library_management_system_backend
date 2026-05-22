@@ -1,16 +1,13 @@
-class Logger {
-
-    info(message: string): void {
+export const logger = {
+    info: (message: string) => {
         console.log(`[INFO] ${message}`);
-    }
+    },
 
-    error(message: string): void {
+    error: (message: string) => {
         console.error(`[ERROR] ${message}`);
-    }
+    },
 
-    warning(message: string): void {
+    warning: (message: string) => {
         console.warn(`[WARNING] ${message}`);
     }
-}
-
-export const logger = new Logger();
+};
