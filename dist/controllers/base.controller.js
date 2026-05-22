@@ -1,38 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-<<<<<<< HEAD
 exports.BaseController = void 0;
-class BaseController {
-    successResponse(res, message, data = null, statusCode = 200) {
-        return res.status(statusCode).json({
-            success: true,
-            message,
-            data,
-        });
-    }
-    errorResponse(res, error, statusCode = 500) {
-        return res.status(statusCode).json({
-            success: false,
-            message: error.message || "Internal Server Error",
-        });
-    }
-    asyncHandler(fn) {
-        return (req, res, next) => {
-            Promise.resolve(fn(req, res, next))
-                .catch(next);
-        };
-    }
-}
-exports.BaseController = BaseController;
-=======
 class BaseController {
     static sendError(res, error, fallbackMessage = "Request failed") {
         const message = error instanceof Error ? error.message : fallbackMessage;
         const statusCode = this.resolveStatusCode(message);
-        res.status(statusCode).json({ message });
+        res.status(statusCode).json({
+            success: false,
+            message,
+        });
     }
     static resolveStatusCode(message) {
         switch (message) {
+            case "Email already exists":
+                return 409;
+            case "Invalid credentials":
+            case "Unauthorized":
+            case "Invalid token":
+                return 401;
             case "Book already borrowed":
                 return 409;
             case "Borrowing not found":
@@ -46,6 +31,23 @@ class BaseController {
                 return 400;
         }
     }
+    asyncHandler(handler) {
+        return async (req, res, next) => {
+            try {
+                await handler(req, res, next);
+            }
+            catch (error) {
+                next(error);
+            }
+        };
+    }
+    successResponse(res, message, data, statusCode = 200) {
+        return res.status(statusCode).json({
+            success: true,
+            message,
+            data,
+        });
+    }
 }
+exports.BaseController = BaseController;
 exports.default = BaseController;
->>>>>>> feat/develop

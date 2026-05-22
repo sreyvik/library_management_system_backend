@@ -14,9 +14,6 @@ const db = mysql.createPool({
     connectionLimit: 10
 });
 
-<<<<<<< HEAD
-export default db;
-=======
 export async function initializeDatabase(): Promise<void> {
     await db.query(`
         CREATE TABLE IF NOT EXISTS borrowings (
@@ -33,4 +30,3 @@ export async function initializeDatabase(): Promise<void> {
 }
 
 export default db;
->>>>>>> feat/develop
