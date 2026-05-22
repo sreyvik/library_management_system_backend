@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import borrowingRoutes from "./routes/borrow.routes";
 
 const app = express();
 
@@ -15,6 +16,9 @@ app.get("/health", (req, res) => {
         message: "Server is running "
     });
 });
+
+app.use("/api", borrowingRoutes);
+app.use("/", borrowingRoutes);
 
 
 export default app;

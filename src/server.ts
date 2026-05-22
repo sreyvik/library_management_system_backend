@@ -2,7 +2,7 @@ import app from "./app";
 
 import { PORT } from "./configs/port";
 import { logger } from "./configs/logger";
-import Database from "./configs/db";
+import db, { initializeDatabase } from "./configs/db";
 
 class Server {
 
@@ -10,7 +10,9 @@ class Server {
 
         try {
 
-            await Database.connect();
+            const connection = await db.getConnection();
+            connection.release();
+            await initializeDatabase();
 
             app.listen(PORT, () => {
                 logger.info(`Server running on http://localhost:${PORT}`);
