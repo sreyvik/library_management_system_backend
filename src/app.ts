@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import borrowingRoutes from "./routes/borrow.routes";
+import dashboardRoutes from "./routes/dashboard.routes";
 
 const app = express();
 
@@ -18,7 +19,9 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/api", borrowingRoutes);
+app.use("/api", dashboardRoutes);
 app.use("/", borrowingRoutes);
+app.use("/", dashboardRoutes);
 
 
 export default app;

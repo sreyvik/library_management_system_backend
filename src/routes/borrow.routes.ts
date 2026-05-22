@@ -3,9 +3,8 @@ import BorrowingsController from "../controllers/borrow.controller";
 
 const router = Router();
 
-// OOP static methods
 router.post("/borrow", BorrowingsController.borrowBook);
-router.put("/return/:id", BorrowingsController.returnBook);
-router.get("/:id", BorrowingsController.getBorrowing);
+router.put("/borrow/return/:id", BorrowingsController.returnBook);
+router.get("/borrow/:id", BorrowingsController.getBorrowing);
 
 export default router;

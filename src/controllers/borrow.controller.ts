@@ -18,7 +18,7 @@ export default class BorrowingsController extends BaseController {
 
       res.status(201).json(result);
     } catch (error) {
-      this.sendError(res, error, "Failed to borrow book");
+      BorrowingsController.sendError(res, error, "Failed to borrow book");
     }
   }
 
@@ -28,7 +28,7 @@ export default class BorrowingsController extends BaseController {
 
       res.status(200).json(result);
     } catch (error) {
-      this.sendError(res, error, "Failed to return book");
+      BorrowingsController.sendError(res, error, "Failed to return book");
     }
   }
 
@@ -38,7 +38,7 @@ export default class BorrowingsController extends BaseController {
 
       res.status(200).json(result);
     } catch (error) {
-      this.sendError(res, error, "Failed to fetch borrowing");
+      BorrowingsController.sendError(res, error, "Failed to fetch borrowing");
     }
   }
 }
