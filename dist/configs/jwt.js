@@ -3,23 +3,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.jwtConfig = exports.verifyToken = exports.generateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const env_1 = require("./env");
-class JwtService {
-    constructor() {
-        this.secret = env_1.env.JWT_SECRET;
-    }
-    generateToken(payload) {
-        const options = {
-            expiresIn: "1d"
-        };
-        return jsonwebtoken_1.default.sign(payload, this.secret, options);
-    }
-    verifyToken(token) {
-        return jsonwebtoken_1.default.verify(token, this.secret);
-    }
-    decodeToken(token) {
-        return jsonwebtoken_1.default.decode(token);
-    }
-}
-exports.default = new JwtService();
+const generateToken = (payload) => {
+    return jsonwebtoken_1.default.sign(payload, env_1.env.JWT_SECRET, {
+        expiresIn: '1d'
+    });
+};
+exports.generateToken = generateToken;
+const verifyToken = (token) => {
+    return jsonwebtoken_1.default.verify(token, env_1.env.JWT_SECRET);
+};
+exports.verifyToken = verifyToken;
+exports.jwtConfig = {
+    secret: process.env.JWT_SECRET || "secret",
+    expiresIn: process.env.JWT_EXPIRES_IN || "1d",
+};
