@@ -10,7 +10,8 @@ class Server {
 
         try {
 
-            await Database.connect();
+            const connection = await Database.getConnection();
+            connection.release();
 
             app.listen(PORT, () => {
                 logger.info(`Server running on http://localhost:${PORT}`);

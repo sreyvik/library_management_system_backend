@@ -12,15 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app.js"));
-const port_1 = require("./configs/port.js");
-const logger_1 = require("./configs/logger.js");
-const db_1 = __importDefault(require("./configs/db.js"));
+const app_1 = __importDefault(require("./app"));
+const port_1 = require("./configs/port");
+const logger_1 = require("./configs/logger");
+const db_1 = __importDefault(require("./configs/db"));
 class Server {
     start() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield db_1.default.connect();
+                const connection = yield db_1.default.getConnection();
+                connection.release();
                 app_1.default.listen(port_1.PORT, () => {
                     logger_1.logger.info(`Server running on http://localhost:${port_1.PORT}`);
                 });

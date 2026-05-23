@@ -1,15 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logger = void 0;
-class Logger {
-    info(message) {
+exports.logger = {
+    info: (message) => {
         console.log(`[INFO] ${message}`);
-    }
-    error(message) {
+    },
+    error: (message) => {
         console.error(`[ERROR] ${message}`);
-    }
-    warning(message) {
+    },
+    warning: (message) => {
         console.warn(`[WARNING] ${message}`);
     }
-}
-exports.logger = new Logger();
+};
