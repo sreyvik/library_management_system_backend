@@ -16,9 +16,8 @@ const db = promise_1.default.createPool({
     waitForConnections: true,
     connectionLimit: 10
 });
-function initializeDatabase() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield db.query(`
+async function initializeDatabase() {
+    await db.query(`
         CREATE TABLE IF NOT EXISTS borrowings (
             id INT AUTO_INCREMENT PRIMARY KEY,
             member_id INT NOT NULL,
@@ -30,6 +29,5 @@ function initializeDatabase() {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     `);
-    });
 }
 exports.default = db;
