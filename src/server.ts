@@ -2,11 +2,7 @@ import app from "./app";
 
 import { PORT } from "./configs/port";
 import { logger } from "./configs/logger";
-<<<<<<< HEAD
-import db from "./configs/db";
-=======
 import db, { initializeDatabase } from "./configs/db";
->>>>>>> feat/develop
 
 class Server {
 
@@ -16,10 +12,7 @@ class Server {
 
             const connection = await db.getConnection();
             connection.release();
-<<<<<<< HEAD
-=======
             await initializeDatabase();
->>>>>>> feat/develop
 
             app.listen(PORT, () => {
                 logger.info(`Server running on http://localhost:${PORT}`);

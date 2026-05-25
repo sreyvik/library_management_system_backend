@@ -16,8 +16,6 @@ const db = promise_1.default.createPool({
     waitForConnections: true,
     connectionLimit: 10
 });
-<<<<<<< HEAD
-=======
 function initializeDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         yield db.query(`
@@ -34,5 +32,4 @@ function initializeDatabase() {
     `);
     });
 }
->>>>>>> feat/develop
 exports.default = db;

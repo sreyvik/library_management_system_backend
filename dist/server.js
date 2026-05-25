@@ -1,6 +1,4 @@
 "use strict";
-<<<<<<< HEAD
-=======
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -43,7 +41,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
->>>>>>> feat/develop
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -51,23 +48,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const port_1 = require("./configs/port");
 const logger_1 = require("./configs/logger");
-<<<<<<< HEAD
-const db_1 = __importDefault(require("./configs/db"));
-class Server {
-    async start() {
-        try {
-            const connection = await db_1.default.getConnection();
-            connection.release();
-            app_1.default.listen(port_1.PORT, () => {
-                logger_1.logger.info(`Server running on http://localhost:${port_1.PORT}`);
-            });
-        }
-        catch (error) {
-            if (error?.code === "ECONNREFUSED") {
-                const host = process.env.DB_HOST ?? "localhost";
-                const port = process.env.DB_PORT ?? "3306";
-                logger_1.logger.error(`Database connection refused. Check MySQL is running at ${host}:${port}.`);
-=======
 const db_1 = __importStar(require("./configs/db"));
 class Server {
     start() {
@@ -79,7 +59,6 @@ class Server {
                 app_1.default.listen(port_1.PORT, () => {
                     logger_1.logger.info(`Server running on http://localhost:${port_1.PORT}`);
                 });
->>>>>>> feat/develop
             }
             const message = error?.message ||
                 error?.code ||
