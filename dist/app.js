@@ -5,13 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const cors = require("cors");
-const routes_1 = __importDefault(require("./routes"));
+const book_routes_1 = __importDefault(require("./routes/book.routes"));
+const member_routes_1 = __importDefault(require("./routes/member.routes"));
 const notFound_middleware_1 = require("./middlewares/notFound.middleware");
 const error_middleware_1 = require("./middlewares/error.middleware");
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use(routes_1.default);
+app.use("/api/books", book_routes_1.default);
+app.use("/api/members", member_routes_1.default);
 app.get("/health", (req, res) => {
     res.json({
         message: "Server is running "
