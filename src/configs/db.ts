@@ -27,6 +27,17 @@ export async function initializeDatabase(): Promise<void> {
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     `);
+
+    await db.query(`
+        CREATE TABLE IF NOT EXISTS reservations (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            member_id INT NOT NULL,
+            book_id INT NOT NULL,
+            reservation_date DATE NOT NULL,
+            status ENUM('Active','Cancelled','Fulfilled') NOT NULL DEFAULT 'Active',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    `);
 }
 
 export default db;

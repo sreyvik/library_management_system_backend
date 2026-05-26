@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import borrowingRoutes from "./routes/borrow.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
+import reservationRoutes from "./routes/reservation.routes";
 
 import authRoutes from "./routes/auth.routes";
 import { errorMiddleware } from "./middleware/error.middleware";
@@ -56,8 +57,10 @@ app.get("/api", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api", borrowingRoutes);
 app.use("/api", dashboardRoutes);
+app.use("/api", reservationRoutes);
 app.use("/", borrowingRoutes);
 app.use("/", dashboardRoutes);
+app.use("/", reservationRoutes);
 
 app.use((req, res) => {
   return res.status(404).json({
