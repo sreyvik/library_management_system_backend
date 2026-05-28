@@ -2,7 +2,7 @@ import app from "./app";
 
 import { PORT } from "./configs/port";
 import { logger } from "./configs/logger";
-import Database from "./configs/db";
+import db from "./configs/db";
 
 class Server {
 
@@ -11,6 +11,7 @@ class Server {
         try {
 
             const connection = await Database.getConnection();
+            const connection = await db.getConnection();
             connection.release();
 
             app.listen(PORT, () => {
@@ -19,7 +20,19 @@ class Server {
 
         } catch (error: any) {
 
-            logger.error(`Server failed to start: ${error.message}`);
+            if (error?.code === "ECONNREFUSED") {
+                const host = process.env.DB_HOST ?? "localhost";
+                const port = process.env.DB_PORT ?? "3306";
+                logger.error(`Database connection refused. Check MySQL is running at ${host}:${port}.`);
+            }
+
+            const message =
+                error?.message ||
+                error?.code ||
+                error?.stack ||
+                String(error);
+
+            logger.error(`Server failed to start: ${message}`);
 
             process.exit(1);
         }
