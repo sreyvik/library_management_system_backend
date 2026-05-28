@@ -1,5 +1,5 @@
 import db from "../configs/db";
-import { IUser } from "../interfaces/user.interface";
+import { IUser } from "../interface/user.interface";
 import { BaseRepository } from "./base.repository";
 
 export class AuthRepository extends BaseRepository<IUser> {

@@ -1,6 +1,4 @@
 "use strict";
-<<<<<<< HEAD
-=======
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -12,4 +10,3 @@ router.post("/borrow", borrow_controller_1.default.borrowBook);
 router.put("/borrow/return/:id", borrow_controller_1.default.returnBook);
 router.get("/borrow/:id", borrow_controller_1.default.getBorrowing);
 exports.default = router;
->>>>>>> feat/develop

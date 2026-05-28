@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 
 import { AuthRepository } from "../repositories/auth.repository";
-import { IUser } from "../interfaces/user.interface";
+import { IUser } from "../interface/user.interface";
 import { generateToken } from "../configs/jwt";
 import { HttpError } from "../errors/http.error";
 

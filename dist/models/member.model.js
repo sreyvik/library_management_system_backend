@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -46,33 +37,33 @@ const mapUpdatePayload = (member) => {
         payload.address = member.address;
     return payload;
 };
-const findAllMembers = () => __awaiter(void 0, void 0, void 0, function* () {
-    const [rows] = yield db_1.default.query(`${BASE_SELECT} ORDER BY id DESC`);
+const findAllMembers = async () => {
+    const [rows] = await db_1.default.query(`${BASE_SELECT} ORDER BY id DESC`);
     return rows;
-});
+};
 exports.findAllMembers = findAllMembers;
-const findMemberById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const [rows] = yield db_1.default.query(`${BASE_SELECT} WHERE id = ? LIMIT 1`, [id]);
+const findMemberById = async (id) => {
+    const [rows] = await db_1.default.query(`${BASE_SELECT} WHERE id = ? LIMIT 1`, [id]);
     const members = rows;
     return members.length > 0 ? members[0] : null;
-});
+};
 exports.findMemberById = findMemberById;
-const createMemberRecord = (member) => __awaiter(void 0, void 0, void 0, function* () {
-    const [result] = yield db_1.default.query("INSERT INTO members SET ?", [mapCreatePayload(member)]);
+const createMemberRecord = async (member) => {
+    const [result] = await db_1.default.query("INSERT INTO members SET ?", [mapCreatePayload(member)]);
     return result.insertId;
-});
+};
 exports.createMemberRecord = createMemberRecord;
-const updateMemberRecord = (id, member) => __awaiter(void 0, void 0, void 0, function* () {
+const updateMemberRecord = async (id, member) => {
     const payload = mapUpdatePayload(member);
     if (Object.keys(payload).length === 0) {
         return false;
     }
-    const [result] = yield db_1.default.query("UPDATE members SET ? WHERE id = ?", [payload, id]);
+    const [result] = await db_1.default.query("UPDATE members SET ? WHERE id = ?", [payload, id]);
     return result.affectedRows > 0;
-});
+};
 exports.updateMemberRecord = updateMemberRecord;
-const deleteMemberRecord = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const [result] = yield db_1.default.query("DELETE FROM members WHERE id = ?", [id]);
+const deleteMemberRecord = async (id) => {
+    const [result] = await db_1.default.query("DELETE FROM members WHERE id = ?", [id]);
     return result.affectedRows > 0;
-});
+};
 exports.deleteMemberRecord = deleteMemberRecord;

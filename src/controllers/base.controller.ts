@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiResponse } from "../interfaces/api-response.interface";
+import { ApiResponse } from "../interface/api-response.interface";
 
 export abstract class BaseController {
   protected static sendError(res: Response, error: unknown, fallbackMessage: string = "Request failed"): void {

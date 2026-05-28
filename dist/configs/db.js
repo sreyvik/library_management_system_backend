@@ -16,8 +16,6 @@ const db = promise_1.default.createPool({
     waitForConnections: true,
     connectionLimit: 10
 });
-<<<<<<< HEAD
-=======
 async function initializeDatabase() {
     await db.query(`
         CREATE TABLE IF NOT EXISTS borrowings (
@@ -42,5 +40,4 @@ async function initializeDatabase() {
         )
     `);
 }
->>>>>>> feat/develop
 exports.default = db;

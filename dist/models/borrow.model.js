@@ -1,6 +1,4 @@
 "use strict";
-<<<<<<< HEAD
-=======
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BorrowingEntity = void 0;
 class LibraryTransaction {
@@ -89,4 +87,3 @@ class BorrowingEntity extends LibraryTransaction {
     }
 }
 exports.BorrowingEntity = BorrowingEntity;
->>>>>>> feat/develop
