@@ -1,3 +1,4 @@
+import { Request, Response } from "express";
 import {
     createMember,
     deleteMember,
@@ -5,99 +6,85 @@ import {
     getMembers,
     updateMember
 } from "../services/member.service";
+import { parseId } from "../utils/validation";
+import { sendSuccess, sendError } from "../utils/response";
 
-const parseId = (value: string): number | null => {
-    const parsed = Number.parseInt(value, 10);
-    return Number.isNaN(parsed) ? null : parsed;
-};
-
-export const listMembers = async (req: any, res: any) => {
+export const listMembers = async (req: Request, res: Response): Promise<Response> => {
     try {
         const members = await getMembers();
-        return res.status(200).json({ success: true, data: members });
+        return sendSuccess(res, members, "Members fetched successfully");
     } catch (error: any) {
-        return res.status(500).json({ success: false, message: error.message });
+        return sendError(res, error.message);
     }
 };
 
-export const getMember = async (req: any, res: any) => {
+export const getMember = async (req: Request, res: Response): Promise<Response> => {
     try {
         const id = parseId(req.params.id);
 
         if (id === null) {
-            return res.status(400).json({ success: false, message: "invalid member id" });
+            return sendError(res, "invalid member id", 400);
         }
 
         const member = await getMemberById(id);
 
         if (!member) {
-            return res.status(404).json({ success: false, message: "member not found" });
+            return sendError(res, "member not found", 404);
         }
 
-        return res.status(200).json({ success: true, data: member });
+        return sendSuccess(res, member, "Member fetched successfully");
     } catch (error: any) {
-        return res.status(500).json({ success: false, message: error.message });
+        return sendError(res, error.message);
     }
 };
 
-export const addMember = async (req: any, res: any) => {
+export const addMember = async (req: Request, res: Response): Promise<Response> => {
     try {
         const member = await createMember(req.body ?? {});
-        return res.status(201).json({
-            success: true,
-            message: "member created successfully",
-            data: member
-        });
+        return sendSuccess(res, member, "member created successfully", 201);
     } catch (error: any) {
-        return res.status(400).json({ success: false, message: error.message });
+        return sendError(res, error.message, 400);
     }
 };
 
-export const editMember = async (req: any, res: any) => {
+export const editMember = async (req: Request, res: Response): Promise<Response> => {
     try {
         const id = parseId(req.params.id);
 
         if (id === null) {
-            return res.status(400).json({ success: false, message: "invalid member id" });
+            return sendError(res, "invalid member id", 400);
         }
 
         const member = await updateMember(id, req.body ?? {});
 
         if (!member) {
-            return res.status(404).json({ success: false, message: "member not found" });
+            return sendError(res, "member not found", 404);
         }
 
-        return res.status(200).json({
-            success: true,
-            message: "member updated successfully",
-            data: member
-        });
+        return sendSuccess(res, member, "member updated successfully");
     } catch (error: any) {
-        return res.status(400).json({ success: false, message: error.message });
+        return sendError(res, error.message, 400);
     }
 };
 
 export const putMember = editMember;
 
-export const removeMember = async (req: any, res: any) => {
+export const removeMember = async (req: Request, res: Response): Promise<Response> => {
     try {
         const id = parseId(req.params.id);
 
         if (id === null) {
-            return res.status(400).json({ success: false, message: "invalid member id" });
+            return sendError(res, "invalid member id", 400);
         }
 
         const deleted = await deleteMember(id);
 
         if (!deleted) {
-            return res.status(404).json({ success: false, message: "member not found" });
+            return sendError(res, "member not found", 404);
         }
 
-        return res.status(200).json({
-            success: true,
-            message: "member deleted successfully"
-        });
+        return sendSuccess(res, undefined, "member deleted successfully");
     } catch (error: any) {
-        return res.status(500).json({ success: false, message: error.message });
+        return sendError(res, error.message);
     }
 };
