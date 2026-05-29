@@ -25,5 +25,14 @@ class ReservationController extends base_controller_1.default {
             ReservationController.sendError(res, error, "Failed to fetch reservation");
         }
     }
+    static async listReservations(req, res) {
+        try {
+            const result = await reservation_service_1.default.listReservations();
+            res.status(200).json(result);
+        }
+        catch (error) {
+            ReservationController.sendError(res, error, "Failed to list reservations");
+        }
+    }
 }
 exports.default = ReservationController;

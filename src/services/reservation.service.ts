@@ -22,4 +22,9 @@ export default class ReservationService {
 
     return reservation.toJSON();
   }
+
+  static async listReservations() {
+    const reservations = await ReservationRepository.findAll();
+    return reservations.map(r => r.toJSON());
+  }
 }

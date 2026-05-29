@@ -21,5 +21,9 @@ class ReservationService {
             throw new Error("Reservation not found");
         return reservation.toJSON();
     }
+    static async listReservations() {
+        const reservations = await reservation_repository_1.default.findAll();
+        return reservations.map(r => r.toJSON());
+    }
 }
 exports.default = ReservationService;

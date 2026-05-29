@@ -24,4 +24,9 @@ export default class ReservationRepository {
     const [row] = rows as ReservationRow[];
     return row ? ReservationEntity.fromRow(row) : null;
   }
+
+  static async findAll(): Promise<ReservationEntity[]> {
+    const [rows] = await db.query(`SELECT * FROM reservations`);
+    return (rows as ReservationRow[]).map(row => ReservationEntity.fromRow(row));
+  }
 }

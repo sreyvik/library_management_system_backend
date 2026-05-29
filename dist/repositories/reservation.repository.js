@@ -20,5 +20,9 @@ class ReservationRepository {
         const [row] = rows;
         return row ? reservation_model_1.ReservationEntity.fromRow(row) : null;
     }
+    static async findAll() {
+        const [rows] = await db_1.default.query(`SELECT * FROM reservations`);
+        return rows.map(row => reservation_model_1.ReservationEntity.fromRow(row));
+    }
 }
 exports.default = ReservationRepository;
