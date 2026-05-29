@@ -85,7 +85,7 @@ test("GET /health returns success response", async () => {
   const body = JSON.parse(response.body);
 
   assert.equal(response.statusCode, 200);
-  assert.equal(body.message, "Server is running ");
+  assert.equal(body.message, "Server is running");
 });
 
 test("GET /api/dashboard returns dashboard summary", async () => {
