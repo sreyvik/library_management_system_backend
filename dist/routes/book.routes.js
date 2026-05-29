@@ -2,10 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const book_controller_1 = require("../controllers/book.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
 const router = express.Router();
 router.get("/", book_controller_1.listBooks);
 router.get("/:id", book_controller_1.getBook);
-router.post("/", book_controller_1.addBook);
-router.put("/:id", book_controller_1.putBook);
-router.delete("/:id", book_controller_1.removeBook);
+router.post("/", auth_middleware_1.authMiddleware, book_controller_1.addBook);
+router.put("/:id", auth_middleware_1.authMiddleware, book_controller_1.editBook);
+router.delete("/:id", auth_middleware_1.authMiddleware, book_controller_1.removeBook);
 exports.default = router;

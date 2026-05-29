@@ -7,13 +7,15 @@ import {
     putBook,
     removeBook
 } from "../controllers/book.controller";
+import { authMiddleware } from "../middleware/auth.middleware";
 
 const router = express.Router();
 
 router.get("/", listBooks);
 router.get("/:id", getBook);
-router.post("/", addBook);
-router.put("/:id", putBook);
-router.delete("/:id", removeBook);
+router.post("/", authMiddleware, addBook);
+router.put("/:id", authMiddleware, editBook);
+router.delete("/:id", authMiddleware, removeBook);
 
 export default router;
+

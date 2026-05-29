@@ -24,8 +24,24 @@ class App {
   private configureMiddleware(): void {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(cors());
+
+    // Secure CORS configuration
+    this.app.use(cors({
+      origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:3001'],
+      credentials: true,
+      optionsSuccessStatus: 200
+    }));
+
     this.app.use(helmet());
+
+    // Prevent caching on GET requests (fixes data refresh issue)
+    this.app.use((req: Request, res: Response, next: NextFunction) => {
+      res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      res.set('Pragma', 'no-cache');
+      res.set('Expires', '0');
+      next();
+    });
+
     this.app.use(
       morgan("dev", {
         skip: (req: Request, res: Response) => req.originalUrl.startsWith("/api/auth"),

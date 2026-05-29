@@ -25,8 +25,20 @@ class App {
     configureMiddleware() {
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
-        this.app.use((0, cors_1.default)());
+        // Secure CORS configuration
+        this.app.use((0, cors_1.default)({
+            origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:3001'],
+            credentials: true,
+            optionsSuccessStatus: 200
+        }));
         this.app.use((0, helmet_1.default)());
+        // Prevent caching on GET requests (fixes data refresh issue)
+        this.app.use((req, res, next) => {
+            res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+            res.set('Pragma', 'no-cache');
+            res.set('Expires', '0');
+            next();
+        });
         this.app.use((0, morgan_1.default)("dev", {
             skip: (req, res) => req.originalUrl.startsWith("/api/auth"),
         }));
