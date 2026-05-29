@@ -6,6 +6,7 @@ import {
     getBooks,
     updateBook
 } from "../services/book.service";
+import { deleteAllBooks as deleteAllBooksFn } from "../services/book.service";
 import { parseId } from "../utils/validation";
 import { sendSuccess, sendError } from "../utils/response";
 
@@ -20,7 +21,7 @@ export const listBooks = async (req: Request, res: Response): Promise<Response> 
 
 export const getBook = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const id = parseId(req.params.id);
+        const id = parseId(req.params.id as string);
 
         if (id === null) {
             return sendError(res, "invalid book id", 400);
@@ -49,7 +50,7 @@ export const addBook = async (req: Request, res: Response): Promise<Response> =>
 
 export const editBook = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const id = parseId(req.params.id);
+        const id = parseId(req.params.id as string);
 
         if (id === null) {
             return res.status(400).json({ success: false, message: "invalid book id" });
@@ -71,7 +72,7 @@ export const putBook = editBook;
 
 export const removeBook = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const id = parseId(req.params.id);
+        const id = parseId(req.params.id as string);
 
         if (id === null) {
             return sendError(res, "invalid book id", 400);
@@ -84,6 +85,15 @@ export const removeBook = async (req: Request, res: Response): Promise<Response>
         }
 
         return sendSuccess(res, undefined, "book deleted successfully");
+    } catch (error: any) {
+        return sendError(res, error.message);
+    }
+};
+
+export const deleteAllBooks = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const deleted = await deleteAllBooksFn();
+        return sendSuccess(res, undefined, "all books deleted successfully");
     } catch (error: any) {
         return sendError(res, error.message);
     }

@@ -20,7 +20,7 @@ export const listMembers = async (req: Request, res: Response): Promise<Response
 
 export const getMember = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const id = parseId(req.params.id);
+        const id = parseId(req.params.id as string);
 
         if (id === null) {
             return sendError(res, "invalid member id", 400);
@@ -49,7 +49,7 @@ export const addMember = async (req: Request, res: Response): Promise<Response> 
 
 export const editMember = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const id = parseId(req.params.id);
+        const id = parseId(req.params.id as string);
 
         if (id === null) {
             return sendError(res, "invalid member id", 400);
@@ -71,7 +71,7 @@ export const putMember = editMember;
 
 export const removeMember = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const id = parseId(req.params.id);
+        const id = parseId(req.params.id as string);
 
         if (id === null) {
             return sendError(res, "invalid member id", 400);

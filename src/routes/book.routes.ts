@@ -1,6 +1,7 @@
 const express = require("express");
 import {
     addBook,
+    deleteAllBooks,
     editBook,
     getBook,
     listBooks,
@@ -16,6 +17,7 @@ router.get("/:id", getBook);
 router.post("/", authMiddleware, addBook);
 router.put("/:id", authMiddleware, editBook);
 router.delete("/:id", authMiddleware, removeBook);
+router.delete("/", authMiddleware, deleteAllBooks);
 
 export default router;
 

@@ -22,6 +22,7 @@ class BaseController {
                 return 409;
             case "Borrowing not found":
             case "Not found":
+            case "Reservation not found":
                 return 404;
             case "Already returned":
             case "Invalid borrow date":
