@@ -7,13 +7,10 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
-<<<<<<< HEAD
-const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
-const error_middleware_1 = require("./middleware/error.middleware");
-=======
 const borrow_routes_1 = __importDefault(require("./routes/borrow.routes"));
 const dashboard_routes_1 = __importDefault(require("./routes/dashboard.routes"));
->>>>>>> feat/develop
+const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const error_middleware_1 = require("./middleware/error.middleware");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -39,7 +36,11 @@ app.get("/", (req, res) => {
         },
     });
 });
-<<<<<<< HEAD
+app.get("/health", (req, res) => {
+    return res.status(200).json({
+        message: "Server is running ",
+    });
+});
 app.get("/api", (req, res) => {
     return res.status(200).json({
         success: true,
@@ -47,6 +48,10 @@ app.get("/api", (req, res) => {
     });
 });
 app.use("/api/auth", auth_routes_1.default);
+app.use("/api", borrow_routes_1.default);
+app.use("/api", dashboard_routes_1.default);
+app.use("/", borrow_routes_1.default);
+app.use("/", dashboard_routes_1.default);
 app.use((req, res) => {
     return res.status(404).json({
         success: false,
@@ -55,10 +60,4 @@ app.use((req, res) => {
     });
 });
 app.use(error_middleware_1.errorMiddleware);
-=======
-app.use("/api", borrow_routes_1.default);
-app.use("/api", dashboard_routes_1.default);
-app.use("/", borrow_routes_1.default);
-app.use("/", dashboard_routes_1.default);
->>>>>>> feat/develop
 exports.default = app;

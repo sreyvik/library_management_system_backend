@@ -40,7 +40,12 @@ app.get("/", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
+app.get("/health", (req, res) => {
+  return res.status(200).json({
+    message: "Server is running ",
+  });
+});
+
 app.get("/api", (req, res) => {
   return res.status(200).json({
     success: true,
@@ -49,6 +54,10 @@ app.get("/api", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api", borrowingRoutes);
+app.use("/api", dashboardRoutes);
+app.use("/", borrowingRoutes);
+app.use("/", dashboardRoutes);
 
 app.use((req, res) => {
   return res.status(404).json({
@@ -59,12 +68,6 @@ app.use((req, res) => {
 });
 
 app.use(errorMiddleware);
-=======
-app.use("/api", borrowingRoutes);
-app.use("/api", dashboardRoutes);
-app.use("/", borrowingRoutes);
-app.use("/", dashboardRoutes);
 
->>>>>>> feat/develop
 
 export default app;
