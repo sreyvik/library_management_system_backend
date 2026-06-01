@@ -1,5 +1,5 @@
 import app from "./app";
-import { PORT } from "./configs/port";
+import { env } from "./configs/env";
 import { logger } from "./configs/logger";
 import db, { initializeDatabase } from "./configs/db";
 
@@ -11,8 +11,8 @@ class Server {
 
       await initializeDatabase();
 
-      app.listen(PORT, () => {
-        logger.info(`Server running on http://localhost:${PORT}`);
+      app.listen(env.PORT, () => {
+        logger.info(`Server running on http://localhost:${env.PORT}`);
       });
     } catch (error: any) {
       if (error?.code === "ECONNREFUSED") {
