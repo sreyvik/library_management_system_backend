@@ -1,5 +1,6 @@
 import {
     createBookRecord,
+    deleteAllBooksRecord,
     deleteBookRecord,
     findAllBooks,
     findBookById,
@@ -69,4 +70,8 @@ export const updateBook = async (id: number, book: BookUpdateInput): Promise<Boo
 
 export const deleteBook = async (id: number): Promise<boolean> => {
     return deleteBookRecord(id);
+};
+
+export const deleteAllBooks = async (): Promise<boolean> => {
+    return deleteAllBooksRecord();
 };

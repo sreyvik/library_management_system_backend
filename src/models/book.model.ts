@@ -110,3 +110,25 @@ export const deleteBookRecord = async (id: number): Promise<boolean> => {
         connection.release();
     }
 };
+
+export const deleteAllBooksRecord = async (): Promise<boolean> => {
+    const connection = await db.getConnection();
+
+    try {
+        await connection.beginTransaction();
+
+        // Remove dependent borrow history first
+        await connection.query("DELETE FROM borrow_records");
+
+        // Delete all books
+        const [result] = await connection.query("DELETE FROM books");
+
+        await connection.commit();
+        return (result as { affectedRows: number }).affectedRows >= 0;
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
+};

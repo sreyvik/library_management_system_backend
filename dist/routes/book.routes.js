@@ -9,4 +9,5 @@ router.get("/:id", book_controller_1.getBook);
 router.post("/", auth_middleware_1.authMiddleware, book_controller_1.addBook);
 router.put("/:id", auth_middleware_1.authMiddleware, book_controller_1.editBook);
 router.delete("/:id", auth_middleware_1.authMiddleware, book_controller_1.removeBook);
+router.delete("/", auth_middleware_1.authMiddleware, book_controller_1.deleteAllBooks);
 exports.default = router;

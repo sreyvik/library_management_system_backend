@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBookRecord = exports.updateBookRecord = exports.createBookRecord = exports.findBookById = exports.findAllBooks = void 0;
+exports.deleteAllBooksRecord = exports.deleteBookRecord = exports.updateBookRecord = exports.createBookRecord = exports.findBookById = exports.findAllBooks = void 0;
 const db_1 = __importDefault(require("../configs/db"));
 const BASE_SELECT = `
     SELECT
@@ -94,3 +94,23 @@ const deleteBookRecord = async (id) => {
     }
 };
 exports.deleteBookRecord = deleteBookRecord;
+const deleteAllBooksRecord = async () => {
+    const connection = await db_1.default.getConnection();
+    try {
+        await connection.beginTransaction();
+        // Remove dependent borrow history first
+        await connection.query("DELETE FROM borrow_records");
+        // Delete all books
+        const [result] = await connection.query("DELETE FROM books");
+        await connection.commit();
+        return result.affectedRows >= 0;
+    }
+    catch (error) {
+        await connection.rollback();
+        throw error;
+    }
+    finally {
+        connection.release();
+    }
+};
+exports.deleteAllBooksRecord = deleteAllBooksRecord;

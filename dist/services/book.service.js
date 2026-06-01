@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteBook = exports.updateBook = exports.createBook = exports.getBookById = exports.getBooks = void 0;
+exports.deleteAllBooks = exports.deleteBook = exports.updateBook = exports.createBook = exports.getBookById = exports.getBooks = void 0;
 const book_model_1 = require("../models/book.model");
 const validateBook = (book = {}) => {
     if (book.categoryId === undefined || Number.isNaN(Number(book.categoryId))) {
@@ -55,3 +55,7 @@ const deleteBook = async (id) => {
     return (0, book_model_1.deleteBookRecord)(id);
 };
 exports.deleteBook = deleteBook;
+const deleteAllBooks = async () => {
+    return (0, book_model_1.deleteAllBooksRecord)();
+};
+exports.deleteAllBooks = deleteAllBooks;

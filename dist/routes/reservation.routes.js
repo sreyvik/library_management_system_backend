@@ -9,4 +9,7 @@ const router = (0, express_1.Router)();
 router.get("/reservations", reservation_controller_1.default.listReservations);
 router.post("/reservations", reservation_controller_1.default.createReservation);
 router.get("/reservations/:id", reservation_controller_1.default.getReservation);
+router.put("/reservations/:id", reservation_controller_1.default.updateReservation);
+router.delete("/reservations/:id", reservation_controller_1.default.deleteReservation);
+router.delete("/reservations", reservation_controller_1.default.deleteAllReservations);
 exports.default = router;
