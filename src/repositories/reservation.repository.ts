@@ -1,5 +1,5 @@
-import db from "../configs/db";
-import { ReservationEntity, ReservationRow, CreateReservationData } from "../models/reservation.model";
+import db from "../configs/db.js";
+import { ReservationEntity, ReservationRow, CreateReservationData } from "../models/reservation.model.js";
 
 interface InsertResult { insertId: number }
 

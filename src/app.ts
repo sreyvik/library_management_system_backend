@@ -2,14 +2,14 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import bookRoutes from "./routes/book.routes";
-import memberRoutes from "./routes/member.routes";
-import borrowingRoutes from "./routes/borrow.routes";
-import dashboardRoutes from "./routes/dashboard.routes";
-import reservationRoutes from "./routes/reservation.routes";
-import authRoutes from "./routes/auth.routes";
-import { notFound } from "./middleware/notFound.middleware";
-import { errorHandler } from "./middleware/error.middleware";
+import bookRoutes from "./routes/book.routes.js";
+import memberRoutes from "./routes/member.routes.js";
+import borrowingRoutes from "./routes/borrow.routes.js";
+import dashboardRoutes from "./routes/dashboard.routes.js";
+import reservationRoutes from "./routes/reservation.routes.js";
+import authRoutes from "./routes/auth.routes.js";
+import { notFound } from "./middleware/notFound.middleware.js";
+import { errorHandler } from "./middleware/error.middleware.js";
 
 class App {
   public readonly app: Application;

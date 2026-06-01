@@ -1,5 +1,5 @@
-import db from "../configs/db";
-import { MemberCreateInput, MemberRecord, MemberUpdateInput } from "../interface/member.interface";
+import db from "../configs/db.js";
+import { MemberCreateInput, MemberRecord, MemberUpdateInput } from "../interface/member.interface.js";
 
 const BASE_SELECT = `
     SELECT

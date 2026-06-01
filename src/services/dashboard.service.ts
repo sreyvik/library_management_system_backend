@@ -1,8 +1,8 @@
 import {
-  DashboardSummary,
-  DashboardSummaryEntity,
-} from "../models/dashboard.model";
-import DashboardRepository from "../repositories/dashboard.repository";
+    DashboardSummary,
+    DashboardSummaryEntity,
+} from "../models/dashboard.model.js";
+import DashboardRepository from "../repositories/dashboard.repository.js";
 
 export default class DashboardService {
   static async getDashboardSummary(): Promise<DashboardSummary> {

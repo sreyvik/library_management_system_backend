@@ -1,12 +1,7 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const db_1 = __importDefault(require("../configs/db"));
+import db from "../configs/db.js";
 class BaseDashboardRepository {
     static async hasTable(tableName) {
-        const [rows] = await db_1.default.query(`SELECT COUNT(*) AS tableExists
+        const [rows] = await db.query(`SELECT COUNT(*) AS tableExists
        FROM information_schema.tables
        WHERE table_schema = DATABASE() AND table_name = ?`, [tableName]);
         return rows[0]?.tableExists > 0;
@@ -15,18 +10,18 @@ class BaseDashboardRepository {
         if (!(await this.hasTable(tableName))) {
             return 0;
         }
-        const [rows] = await db_1.default.query(`SELECT COUNT(*) AS total FROM \`${tableName}\``);
+        const [rows] = await db.query(`SELECT COUNT(*) AS total FROM \`${tableName}\``);
         return rows[0]?.total ?? 0;
     }
     static async countBorrowingsByStatus(status) {
         if (!(await this.hasTable("borrowings"))) {
             return 0;
         }
-        const [rows] = await db_1.default.query(`SELECT COUNT(*) AS total FROM borrowings WHERE status = ?`, [status]);
+        const [rows] = await db.query(`SELECT COUNT(*) AS total FROM borrowings WHERE status = ?`, [status]);
         return rows[0]?.total ?? 0;
     }
 }
-class DashboardRepository extends BaseDashboardRepository {
+export default class DashboardRepository extends BaseDashboardRepository {
     static async getTotalBooks() {
         return await this.countAll("books");
     }
@@ -43,4 +38,3 @@ class DashboardRepository extends BaseDashboardRepository {
         return await this.countAll("reservations");
     }
 }
-exports.default = DashboardRepository;

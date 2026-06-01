@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ReservationEntity = void 0;
-class ReservationEntity {
+export class ReservationEntity {
     constructor(id, memberId, bookId, reservationDate, status, createdAt) {
         this.id = id;
         this.memberId = memberId;
@@ -45,4 +42,3 @@ class ReservationEntity {
         };
     }
 }
-exports.ReservationEntity = ReservationEntity;

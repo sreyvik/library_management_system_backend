@@ -1,19 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.DashboardSummaryEntity = exports.CountMetric = void 0;
 class DashboardMetric {
     constructor(label, value) {
         this.label = label;
         this.value = value;
     }
 }
-class CountMetric extends DashboardMetric {
+export class CountMetric extends DashboardMetric {
     static create(label, value) {
         return new CountMetric(label, value);
     }
 }
-exports.CountMetric = CountMetric;
-class DashboardSummaryEntity {
+export class DashboardSummaryEntity {
     constructor(totalBooks, totalMembers, borrowedBooks, overdueBooks, totalReservations) {
         this.totalBooks = totalBooks;
         this.totalMembers = totalMembers;
@@ -34,4 +30,3 @@ class DashboardSummaryEntity {
         };
     }
 }
-exports.DashboardSummaryEntity = DashboardSummaryEntity;

@@ -1,36 +1,31 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const reservation_repository_1 = __importDefault(require("../repositories/reservation.repository"));
-const reservation_model_1 = require("../models/reservation.model");
-const validation_1 = require("../utils/validation");
-class ReservationService {
+import ReservationRepository from "../repositories/reservation.repository.js";
+import { ReservationEntity } from "../models/reservation.model.js";
+import { validateRequiredField, validateNumber } from "../utils/validation.js";
+export default class ReservationService {
     static async createReservation(memberId, bookId, reservationDate) {
         // Validate required fields
-        (0, validation_1.validateRequiredField)(memberId, "memberId");
-        (0, validation_1.validateRequiredField)(bookId, "bookId");
-        (0, validation_1.validateRequiredField)(reservationDate, "reservationDate");
+        validateRequiredField(memberId, "memberId");
+        validateRequiredField(bookId, "bookId");
+        validateRequiredField(reservationDate, "reservationDate");
         // Validate that memberId and bookId are numbers
-        (0, validation_1.validateNumber)(memberId, "memberId");
-        (0, validation_1.validateNumber)(bookId, "bookId");
-        const existing = await reservation_repository_1.default.findActiveByBookAndMember(bookId, memberId);
+        validateNumber(memberId, "memberId");
+        validateNumber(bookId, "bookId");
+        const existing = await ReservationRepository.findActiveByBookAndMember(bookId, memberId);
         if (existing) {
             throw new Error("Active reservation already exists for this member and book");
         }
-        const data = reservation_model_1.ReservationEntity.createNew(memberId, bookId, reservationDate);
-        const reservation = await reservation_repository_1.default.create(data);
+        const data = ReservationEntity.createNew(memberId, bookId, reservationDate);
+        const reservation = await ReservationRepository.create(data);
         return reservation.toJSON();
     }
     static async updateReservation(id, memberId, bookId, reservationDate, status) {
         // Validate required fields
-        (0, validation_1.validateRequiredField)(memberId, "memberId");
-        (0, validation_1.validateRequiredField)(bookId, "bookId");
-        (0, validation_1.validateRequiredField)(reservationDate, "reservationDate");
+        validateRequiredField(memberId, "memberId");
+        validateRequiredField(bookId, "bookId");
+        validateRequiredField(reservationDate, "reservationDate");
         // Validate that memberId and bookId are numbers
-        (0, validation_1.validateNumber)(memberId, "memberId");
-        (0, validation_1.validateNumber)(bookId, "bookId");
+        validateNumber(memberId, "memberId");
+        validateNumber(bookId, "bookId");
         // Use default status if not provided
         const statusToUse = status ?? "Active";
         // Validate status
@@ -38,33 +33,32 @@ class ReservationService {
         if (!validStatuses.includes(statusToUse)) {
             throw new Error(`Invalid reservation status: ${statusToUse}`);
         }
-        const data = reservation_model_1.ReservationEntity.createNew(memberId, bookId, reservationDate, statusToUse);
-        const reservation = await reservation_repository_1.default.update(id, data);
+        const data = ReservationEntity.createNew(memberId, bookId, reservationDate, statusToUse);
+        const reservation = await ReservationRepository.update(id, data);
         return reservation.toJSON();
     }
     static async deleteReservation(id) {
         // Validate ID
-        (0, validation_1.validateRequiredField)(id, "id");
-        (0, validation_1.validateNumber)(id, "id");
-        const deleted = await reservation_repository_1.default.deleteById(id);
+        validateRequiredField(id, "id");
+        validateNumber(id, "id");
+        const deleted = await ReservationRepository.deleteById(id);
         if (!deleted) {
             throw new Error("Reservation not found");
         }
         return { success: true, message: "Reservation deleted" };
     }
     static async deleteAllReservations() {
-        const count = await reservation_repository_1.default.deleteAll();
+        const count = await ReservationRepository.deleteAll();
         return { success: true, message: `Deleted ${count} reservations` };
     }
     static async getReservationById(id) {
-        const reservation = await reservation_repository_1.default.findById(id);
+        const reservation = await ReservationRepository.findById(id);
         if (!reservation)
             throw new Error("Reservation not found");
         return reservation.toJSON();
     }
     static async listReservations() {
-        const reservations = await reservation_repository_1.default.findAll();
+        const reservations = await ReservationRepository.findAll();
         return reservations.map(r => r.toJSON());
     }
 }
-exports.default = ReservationService;

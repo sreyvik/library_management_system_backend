@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 import {
     addMember,
     editMember,
@@ -6,8 +6,8 @@ import {
     listMembers,
     putMember,
     removeMember
-} from "../controllers/member.controller";
-import { authMiddleware } from "../middleware/auth.middleware";
+} from "../controllers/member.controller.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 

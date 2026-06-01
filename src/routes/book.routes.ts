@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 import {
     addBook,
     deleteAllBooks,
@@ -7,8 +7,8 @@ import {
     listBooks,
     putBook,
     removeBook
-} from "../controllers/book.controller";
-import { authMiddleware } from "../middleware/auth.middleware";
+} from "../controllers/book.controller.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 

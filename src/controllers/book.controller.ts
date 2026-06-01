@@ -5,10 +5,10 @@ import {
     getBookById,
     getBooks,
     updateBook
-} from "../services/book.service";
-import { deleteAllBooks as deleteAllBooksFn } from "../services/book.service";
-import { parseId } from "../utils/validation";
-import { sendSuccess, sendError } from "../utils/response";
+} from "../services/book.service.js";
+import { deleteAllBooks as deleteAllBooksFn } from "../services/book.service.js";
+import { parseId } from "../utils/validation.js";
+import { sendSuccess, sendError } from "../utils/response.js";
 
 export const listBooks = async (req: Request, res: Response): Promise<Response> => {
     try {

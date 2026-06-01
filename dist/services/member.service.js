@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMember = exports.updateMember = exports.createMember = exports.getMemberById = exports.getMembers = void 0;
-const member_model_1 = require("../models/member.model");
+import { createMemberRecord, deleteMemberRecord, findAllMembers, findMemberById, updateMemberRecord } from "../models/member.model.js";
 const validateMember = (member = {}) => {
     if (!member.fullName || member.fullName.trim() === "") {
         throw new Error("fullName is required");
@@ -19,27 +16,24 @@ const validateMember = (member = {}) => {
         throw new Error("address is required");
     }
 };
-const getMembers = async () => {
-    return (0, member_model_1.findAllMembers)();
+export const getMembers = async () => {
+    return findAllMembers();
 };
-exports.getMembers = getMembers;
-const getMemberById = async (id) => {
-    return (0, member_model_1.findMemberById)(id);
+export const getMemberById = async (id) => {
+    return findMemberById(id);
 };
-exports.getMemberById = getMemberById;
-const createMember = async (member) => {
+export const createMember = async (member) => {
     validateMember(member);
-    const newId = await (0, member_model_1.createMemberRecord)(member);
-    const createdMember = await (0, member_model_1.findMemberById)(newId);
+    const newId = await createMemberRecord(member);
+    const createdMember = await findMemberById(newId);
     if (!createdMember) {
         throw new Error("member was created but could not be retrieved");
     }
     return createdMember;
 };
-exports.createMember = createMember;
-const updateMember = async (id, member) => {
+export const updateMember = async (id, member) => {
     const incomingMember = member ?? {};
-    const exists = await (0, member_model_1.findMemberById)(id);
+    const exists = await findMemberById(id);
     if (!exists) {
         return null;
     }
@@ -56,14 +50,12 @@ const updateMember = async (id, member) => {
             address: incomingMember.address ?? exists.address
         });
     }
-    const updated = await (0, member_model_1.updateMemberRecord)(id, incomingMember);
+    const updated = await updateMemberRecord(id, incomingMember);
     if (!updated) {
         return exists;
     }
-    return (0, member_model_1.findMemberById)(id);
+    return findMemberById(id);
 };
-exports.updateMember = updateMember;
-const deleteMember = async (id) => {
-    return (0, member_model_1.deleteMemberRecord)(id);
+export const deleteMember = async (id) => {
+    return deleteMemberRecord(id);
 };
-exports.deleteMember = deleteMember;

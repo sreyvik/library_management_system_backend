@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { AuthController } from "../controllers/auth.controller";
-import { loginDto } from "../dto/auth/login.dto";
-import { registerDTO } from "../dto/auth/register.dto";
-import { authMiddleware } from "../middleware/auth.middleware";
-import { validateRequest } from "../middleware/validation.middleware";
-import { AuthRepository } from "../repositories/auth.repository";
+import { AuthController } from "../controllers/auth.controller.js";
+import { loginDto } from "../dto/auth/login.dto.js";
+import { registerDTO } from "../dto/auth/register.dto.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { validateRequest } from "../middleware/validation.middleware.js";
+import { AuthRepository } from "../repositories/auth.repository.js";
 
 interface AuthenticatedRequest extends Request {
   user?: {

@@ -1,9 +1,10 @@
-import db from "../configs/db";
+import db from "../configs/db.js";
 import {
   BorrowingEntity,
   BorrowingRow,
   CreateBorrowingData,
-} from "../models/borrow.model";
+}
+from "../models/borrow.model.js";
 
 interface InsertResult {
   insertId: number;

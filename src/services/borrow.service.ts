@@ -1,9 +1,9 @@
 import {
-  Borrowing,
-  BorrowingEntity,
-  BorrowingStatus,
-} from "../models/borrow.model";
-import BorrowingRepository from "../repositories/borrow.repository";
+    Borrowing,
+    BorrowingEntity,
+    BorrowingStatus,
+} from "../models/borrow.model.js";
+import BorrowingRepository from "../repositories/borrow.repository.js";
 
 export default class BorrowingService {
   static async borrowBook(

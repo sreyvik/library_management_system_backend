@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BaseController = void 0;
-class BaseController {
+export class BaseController {
     static sendError(res, error, fallbackMessage = "Request failed") {
         const message = error instanceof Error ? error.message : fallbackMessage;
         const statusCode = this.resolveStatusCode(message);
@@ -50,5 +47,4 @@ class BaseController {
         });
     }
 }
-exports.BaseController = BaseController;
-exports.default = BaseController;
+export default BaseController;

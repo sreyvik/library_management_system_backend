@@ -1,37 +1,32 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const helmet_1 = __importDefault(require("helmet"));
-const morgan_1 = __importDefault(require("morgan"));
-const book_routes_1 = __importDefault(require("./routes/book.routes"));
-const member_routes_1 = __importDefault(require("./routes/member.routes"));
-const borrow_routes_1 = __importDefault(require("./routes/borrow.routes"));
-const dashboard_routes_1 = __importDefault(require("./routes/dashboard.routes"));
-const reservation_routes_1 = __importDefault(require("./routes/reservation.routes"));
-const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
-const notFound_middleware_1 = require("./middleware/notFound.middleware");
-const error_middleware_1 = require("./middleware/error.middleware");
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import bookRoutes from "./routes/book.routes.js";
+import memberRoutes from "./routes/member.routes.js";
+import borrowingRoutes from "./routes/borrow.routes.js";
+import dashboardRoutes from "./routes/dashboard.routes.js";
+import reservationRoutes from "./routes/reservation.routes.js";
+import authRoutes from "./routes/auth.routes.js";
+import { notFound } from "./middleware/notFound.middleware.js";
+import { errorHandler } from "./middleware/error.middleware.js";
 class App {
     constructor() {
-        this.app = (0, express_1.default)();
+        this.app = express();
         this.configureMiddleware();
         this.configureRoutes();
         this.configureErrorHandlers();
     }
     configureMiddleware() {
-        this.app.use(express_1.default.json());
-        this.app.use(express_1.default.urlencoded({ extended: true }));
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: true }));
         // Secure CORS configuration
-        this.app.use((0, cors_1.default)({
+        this.app.use(cors({
             origin: process.env.ALLOWED_ORIGINS?.split(',') || ['http://localhost:3000', 'http://localhost:3001'],
             credentials: true,
             optionsSuccessStatus: 200
         }));
-        this.app.use((0, helmet_1.default)());
+        this.app.use(helmet());
         // Prevent caching on GET requests (fixes data refresh issue)
         this.app.use((req, res, next) => {
             res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
@@ -39,7 +34,7 @@ class App {
             res.set('Expires', '0');
             next();
         });
-        this.app.use((0, morgan_1.default)("dev", {
+        this.app.use(morgan("dev", {
             skip: (req, res) => req.originalUrl.startsWith("/api/auth"),
         }));
     }
@@ -47,16 +42,16 @@ class App {
         this.app.get("/", this.rootHandler);
         this.app.get("/health", this.healthHandler);
         this.app.get("/api", this.apiHandler);
-        this.app.use("/api/books", book_routes_1.default);
-        this.app.use("/api/members", member_routes_1.default);
-        this.app.use("/api/auth", auth_routes_1.default);
-        this.app.use("/api", borrow_routes_1.default);
-        this.app.use("/api", dashboard_routes_1.default);
-        this.app.use("/api", reservation_routes_1.default);
+        this.app.use("/api/books", bookRoutes);
+        this.app.use("/api/members", memberRoutes);
+        this.app.use("/api/auth", authRoutes);
+        this.app.use("/api", borrowingRoutes);
+        this.app.use("/api", dashboardRoutes);
+        this.app.use("/api", reservationRoutes);
     }
     configureErrorHandlers() {
-        this.app.use(notFound_middleware_1.notFound);
-        this.app.use(error_middleware_1.errorHandler);
+        this.app.use(notFound);
+        this.app.use(errorHandler);
     }
     rootHandler(req, res) {
         return res.status(200).json({
@@ -83,4 +78,4 @@ class App {
         });
     }
 }
-exports.default = new App().app;
+export default new App().app;

@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserModel = void 0;
-class UserModel {
+export class UserModel {
     constructor(user) {
         this.id = user.id;
         this.name = user.name;
@@ -10,4 +7,3 @@ class UserModel {
         this.role = user.role || "user";
     }
 }
-exports.UserModel = UserModel;

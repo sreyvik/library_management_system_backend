@@ -1,11 +1,5 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.env = void 0;
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+import dotenv from "dotenv";
+dotenv.config();
 const validateEnv = () => {
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret || jwtSecret === 'secret_key') {
@@ -13,7 +7,7 @@ const validateEnv = () => {
     }
 };
 validateEnv();
-exports.env = {
+export const env = {
     PORT: process.env.PORT || 3000,
     DB_HOST: process.env.DB_HOST || "localhost",
     DB_PORT: Number(process.env.DB_PORT) || 3306,

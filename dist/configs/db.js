@@ -1,22 +1,16 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.initializeDatabase = initializeDatabase;
-const promise_1 = __importDefault(require("mysql2/promise"));
-const env_1 = require("./env");
-const db = promise_1.default.createPool({
-    host: env_1.env.DB_HOST,
-    user: env_1.env.DB_USER,
-    password: env_1.env.DB_PASSWORD,
-    database: env_1.env.DB_NAME,
+import mysql from 'mysql2/promise';
+import { env } from './env.js';
+const db = mysql.createPool({
+    host: env.DB_HOST,
+    user: env.DB_USER,
+    password: env.DB_PASSWORD,
+    database: env.DB_NAME,
     // MySQL port
-    port: env_1.env.DB_PORT,
+    port: env.DB_PORT,
     waitForConnections: true,
     connectionLimit: 10
 });
-async function initializeDatabase() {
+export async function initializeDatabase() {
     await db.query(`
         CREATE TABLE IF NOT EXISTS borrowings (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -40,4 +34,4 @@ async function initializeDatabase() {
         )
     `);
 }
-exports.default = db;
+export default db;

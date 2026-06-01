@@ -1,7 +1,7 @@
-import app from "./app";
-import { PORT } from "./configs/port";
-import { logger } from "./configs/logger";
-import db, { initializeDatabase } from "./configs/db";
+import app from "./app.js";
+import { env } from "./configs/env.js";
+import { logger } from "./configs/logger.js";
+import db, { initializeDatabase } from "./configs/db.js";
 
 class Server {
   public async start(): Promise<void> {
@@ -11,9 +11,9 @@ class Server {
 
       await initializeDatabase();
 
-      app.listen(PORT, () => {
-        logger.info(`Server running on http://localhost:${PORT}`);
-      });
+       app.listen(env.PORT, () => {
+         logger.info(`Server running on http://localhost:${env.PORT}`);
+       });
     } catch (error: any) {
       if (error?.code === "ECONNREFUSED") {
         const host = process.env.DB_HOST ?? "localhost";

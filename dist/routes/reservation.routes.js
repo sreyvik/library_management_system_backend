@@ -1,15 +1,10 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const reservation_controller_1 = __importDefault(require("../controllers/reservation.controller"));
-const router = (0, express_1.Router)();
-router.get("/reservations", reservation_controller_1.default.listReservations);
-router.post("/reservations", reservation_controller_1.default.createReservation);
-router.get("/reservations/:id", reservation_controller_1.default.getReservation);
-router.put("/reservations/:id", reservation_controller_1.default.updateReservation);
-router.delete("/reservations/:id", reservation_controller_1.default.deleteReservation);
-router.delete("/reservations", reservation_controller_1.default.deleteAllReservations);
-exports.default = router;
+import { Router } from "express";
+import ReservationController from "../controllers/reservation.controller.js";
+const router = Router();
+router.get("/reservations", ReservationController.listReservations);
+router.post("/reservations", ReservationController.createReservation);
+router.get("/reservations/:id", ReservationController.getReservation);
+router.put("/reservations/:id", ReservationController.updateReservation);
+router.delete("/reservations/:id", ReservationController.deleteReservation);
+router.delete("/reservations", ReservationController.deleteAllReservations);
+export default router;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import BaseController from "./base.controller";
-import BorrowingService from "../services/borrow.service";
+import BaseController from "./base.controller.js";
+import BorrowingService from "../services/borrow.service.js";
 
 export default class BorrowingsController extends BaseController {
   static async borrowBook(req: Request, res: Response): Promise<void> {

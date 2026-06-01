@@ -1,5 +1,5 @@
 import { Router } from "express";
-import BorrowingsController from "../controllers/borrow.controller";
+import BorrowingsController from "../controllers/borrow.controller.js";
 
 const router = Router();
 

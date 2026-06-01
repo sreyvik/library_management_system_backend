@@ -1,24 +1,18 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthService = void 0;
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
-const auth_repository_1 = require("../repositories/auth.repository");
-const jwt_1 = require("../configs/jwt");
-const http_error_1 = require("../errors/http.error");
-class AuthService {
+import bcrypt from "bcryptjs";
+import { AuthRepository } from "../repositories/auth.repository.js";
+import { generateToken } from "../configs/jwt.js";
+import { HttpError } from "../errors/http.error.js";
+export class AuthService {
     constructor() {
-        this.authRepository = new auth_repository_1.AuthRepository();
+        this.authRepository = new AuthRepository();
     }
     async register(userData) {
         const existingUser = await this.authRepository.findByEmail(userData.email);
         if (existingUser) {
-            throw new http_error_1.HttpError("Email already exists", 409);
+            throw new HttpError("Email already exists", 409);
         }
         // Hash password
-        const hashedPassword = await bcryptjs_1.default.hash(userData.password, 10);
+        const hashedPassword = await bcrypt.hash(userData.password, 10);
         userData.password = hashedPassword;
         const insertId = await this.authRepository.create(userData);
         const user = {
@@ -27,7 +21,7 @@ class AuthService {
             email: userData.email,
             role: userData.role || "Librarian",
         };
-        const token = (0, jwt_1.generateToken)({
+        const token = generateToken({
             id: user.id,
             email: user.email,
             role: user.role,
@@ -43,14 +37,14 @@ class AuthService {
     async login(email, password) {
         const user = await this.authRepository.findByEmail(email);
         if (!user) {
-            throw new http_error_1.HttpError("Invalid credentials", 401);
+            throw new HttpError("Invalid credentials", 401);
         }
-        const isMatch = await bcryptjs_1.default.compare(password, user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            throw new http_error_1.HttpError("Invalid credentials", 401);
+            throw new HttpError("Invalid credentials", 401);
         }
         // Generate JWT
-        const token = (0, jwt_1.generateToken)({
+        const token = generateToken({
             id: user.id,
             email: user.email,
             role: user.role,
@@ -66,4 +60,3 @@ class AuthService {
         };
     }
 }
-exports.AuthService = AuthService;

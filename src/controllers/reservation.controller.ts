@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { parseId } from "../utils/validation";
-import BaseController from "./base.controller";
-import ReservationService from "../services/reservation.service";
+import { parseId } from "../utils/validation.js";
+import BaseController from "./base.controller.js";
+import ReservationService from "../services/reservation.service.js";
 
 export default class ReservationController extends BaseController {
   static async createReservation(req: Request, res: Response): Promise<void> {

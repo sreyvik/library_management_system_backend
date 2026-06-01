@@ -1,10 +1,4 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteMemberRecord = exports.updateMemberRecord = exports.createMemberRecord = exports.findMemberById = exports.findAllMembers = void 0;
-const db_1 = __importDefault(require("../configs/db"));
+import db from "../configs/db.js";
 const BASE_SELECT = `
     SELECT
         id,
@@ -37,33 +31,28 @@ const mapUpdatePayload = (member) => {
         payload.address = member.address;
     return payload;
 };
-const findAllMembers = async () => {
-    const [rows] = await db_1.default.query(`${BASE_SELECT} ORDER BY id DESC`);
+export const findAllMembers = async () => {
+    const [rows] = await db.query(`${BASE_SELECT} ORDER BY id DESC`);
     return rows;
 };
-exports.findAllMembers = findAllMembers;
-const findMemberById = async (id) => {
-    const [rows] = await db_1.default.query(`${BASE_SELECT} WHERE id = ? LIMIT 1`, [id]);
+export const findMemberById = async (id) => {
+    const [rows] = await db.query(`${BASE_SELECT} WHERE id = ? LIMIT 1`, [id]);
     const members = rows;
     return members.length > 0 ? members[0] : null;
 };
-exports.findMemberById = findMemberById;
-const createMemberRecord = async (member) => {
-    const [result] = await db_1.default.query("INSERT INTO members SET ?", [mapCreatePayload(member)]);
+export const createMemberRecord = async (member) => {
+    const [result] = await db.query("INSERT INTO members SET ?", [mapCreatePayload(member)]);
     return result.insertId;
 };
-exports.createMemberRecord = createMemberRecord;
-const updateMemberRecord = async (id, member) => {
+export const updateMemberRecord = async (id, member) => {
     const payload = mapUpdatePayload(member);
     if (Object.keys(payload).length === 0) {
         return false;
     }
-    const [result] = await db_1.default.query("UPDATE members SET ? WHERE id = ?", [payload, id]);
+    const [result] = await db.query("UPDATE members SET ? WHERE id = ?", [payload, id]);
     return result.affectedRows > 0;
 };
-exports.updateMemberRecord = updateMemberRecord;
-const deleteMemberRecord = async (id) => {
-    const [result] = await db_1.default.query("DELETE FROM members WHERE id = ?", [id]);
+export const deleteMemberRecord = async (id) => {
+    const [result] = await db.query("DELETE FROM members WHERE id = ?", [id]);
     return result.affectedRows > 0;
 };
-exports.deleteMemberRecord = deleteMemberRecord;

@@ -4,8 +4,8 @@ import {
     findAllMembers,
     findMemberById,
     updateMemberRecord
-} from "../models/member.model";
-import { MemberCreateInput, MemberRecord, MemberUpdateInput } from "../interface/member.interface";
+} from "../models/member.model.js";
+import { MemberCreateInput, MemberRecord, MemberUpdateInput } from "../interface/member.interface.js";
 
 const validateMember = (member: Partial<MemberCreateInput> = {}) => {
     if (!member.fullName || member.fullName.trim() === "") {

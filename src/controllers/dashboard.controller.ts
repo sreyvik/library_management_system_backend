@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import BaseController from "./base.controller";
-import DashboardService from "../services/dashboard.service";
+import BaseController from "./base.controller.js";
+import DashboardService from "../services/dashboard.service.js";
 
 export default class DashboardController extends BaseController {
   static async getDashboard(req: Request, res: Response): Promise<void> {

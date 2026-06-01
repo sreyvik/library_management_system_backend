@@ -1,15 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const auth_controller_1 = require("../controllers/auth.controller");
-const login_dto_1 = require("../dto/auth/login.dto");
-const register_dto_1 = require("../dto/auth/register.dto");
-const auth_middleware_1 = require("../middleware/auth.middleware");
-const validation_middleware_1 = require("../middleware/validation.middleware");
-const auth_repository_1 = require("../repositories/auth.repository");
-const router = (0, express_1.Router)();
-const authController = new auth_controller_1.AuthController();
-const authRepository = new auth_repository_1.AuthRepository();
+import { Router } from "express";
+import { AuthController } from "../controllers/auth.controller.js";
+import { loginDto } from "../dto/auth/login.dto.js";
+import { registerDTO } from "../dto/auth/register.dto.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
+import { validateRequest } from "../middleware/validation.middleware.js";
+import { AuthRepository } from "../repositories/auth.repository.js";
+const router = Router();
+const authController = new AuthController();
+const authRepository = new AuthRepository();
 router.get("/", (_req, res) => {
     return res.status(200).json({
         success: true,
@@ -35,7 +33,7 @@ router.get("/login", (_req, res) => {
         requiredFields: ["email", "password"],
     });
 });
-router.get("/me", auth_middleware_1.authMiddleware, async (req, res, next) => {
+router.get("/me", authMiddleware, async (req, res, next) => {
     try {
         if (!req.user?.id) {
             return res.status(401).json({
@@ -65,6 +63,6 @@ router.get("/me", auth_middleware_1.authMiddleware, async (req, res, next) => {
         return next(error);
     }
 });
-router.post("/register", register_dto_1.registerDTO, validation_middleware_1.validateRequest, authController.register);
-router.post("/login", login_dto_1.loginDto, validation_middleware_1.validateRequest, authController.login);
-exports.default = router;
+router.post("/register", registerDTO, validateRequest, authController.register);
+router.post("/login", loginDto, validateRequest, authController.login);
+export default router;

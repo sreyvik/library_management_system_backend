@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.BorrowingEntity = void 0;
 class LibraryTransaction {
     constructor(memberId, bookId, borrowDate, dueDate, returnDate, status) {
         this.memberId = memberId;
@@ -30,7 +27,7 @@ class LibraryTransaction {
         return this.status;
     }
 }
-class BorrowingEntity extends LibraryTransaction {
+export class BorrowingEntity extends LibraryTransaction {
     constructor(id, memberId, bookId, borrowDate, dueDate, returnDate, status, createdAt) {
         super(memberId, bookId, borrowDate, dueDate, returnDate, status);
         this.id = id;
@@ -86,4 +83,3 @@ class BorrowingEntity extends LibraryTransaction {
         };
     }
 }
-exports.BorrowingEntity = BorrowingEntity;

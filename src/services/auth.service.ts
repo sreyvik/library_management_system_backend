@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 
-import { AuthRepository } from "../repositories/auth.repository";
-import { IUser } from "../interface/user.interface";
-import { generateToken } from "../configs/jwt";
-import { HttpError } from "../errors/http.error";
+import { AuthRepository } from "../repositories/auth.repository.js";
+import { IUser } from "../interface/user.interface.js";
+import { generateToken } from "../configs/jwt.js";
+import { HttpError } from "../errors/http.error.js";
 
 export class AuthService {
   private authRepository: AuthRepository;

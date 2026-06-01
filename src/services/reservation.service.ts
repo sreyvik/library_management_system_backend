@@ -1,6 +1,6 @@
-import ReservationRepository from "../repositories/reservation.repository";
-import { ReservationEntity, ReservationStatus } from "../models/reservation.model";
-import { validateRequiredField, validateNumber } from "../utils/validation";
+import ReservationRepository from "../repositories/reservation.repository.js";
+import { ReservationEntity, ReservationStatus } from "../models/reservation.model.js";
+import { validateRequiredField, validateNumber } from "../utils/validation.js";
 
 export default class ReservationService {
   static async createReservation(memberId: number, bookId: number, reservationDate: string) {

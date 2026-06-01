@@ -1,10 +1,4 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAllBooksRecord = exports.deleteBookRecord = exports.updateBookRecord = exports.createBookRecord = exports.findBookById = exports.findAllBooks = void 0;
-const db_1 = __importDefault(require("../configs/db"));
+import db from "../configs/db.js";
 const BASE_SELECT = `
     SELECT
         id,
@@ -45,33 +39,29 @@ const mapUpdatePayload = (book) => {
         payload.available_quantity = book.availableQuantity;
     return payload;
 };
-const findAllBooks = async () => {
-    const [rows] = await db_1.default.query(`${BASE_SELECT} ORDER BY id DESC`);
+export const findAllBooks = async () => {
+    const [rows] = await db.query(`${BASE_SELECT} ORDER BY id DESC`);
     return rows;
 };
-exports.findAllBooks = findAllBooks;
-const findBookById = async (id) => {
-    const [rows] = await db_1.default.query(`${BASE_SELECT} WHERE id = ? LIMIT 1`, [id]);
+export const findBookById = async (id) => {
+    const [rows] = await db.query(`${BASE_SELECT} WHERE id = ? LIMIT 1`, [id]);
     const books = rows;
     return books.length > 0 ? books[0] : null;
 };
-exports.findBookById = findBookById;
-const createBookRecord = async (book) => {
-    const [result] = await db_1.default.query("INSERT INTO books SET ?", [mapCreatePayload(book)]);
+export const createBookRecord = async (book) => {
+    const [result] = await db.query("INSERT INTO books SET ?", [mapCreatePayload(book)]);
     return result.insertId;
 };
-exports.createBookRecord = createBookRecord;
-const updateBookRecord = async (id, book) => {
+export const updateBookRecord = async (id, book) => {
     const payload = mapUpdatePayload(book);
     if (Object.keys(payload).length === 0) {
         return false;
     }
-    const [result] = await db_1.default.query("UPDATE books SET ? WHERE id = ?", [payload, id]);
+    const [result] = await db.query("UPDATE books SET ? WHERE id = ?", [payload, id]);
     return result.affectedRows > 0;
 };
-exports.updateBookRecord = updateBookRecord;
-const deleteBookRecord = async (id) => {
-    const connection = await db_1.default.getConnection();
+export const deleteBookRecord = async (id) => {
+    const connection = await db.getConnection();
     try {
         await connection.beginTransaction();
         const [existingRows] = await connection.query("SELECT id FROM books WHERE id = ? LIMIT 1 FOR UPDATE", [id]);
@@ -93,9 +83,8 @@ const deleteBookRecord = async (id) => {
         connection.release();
     }
 };
-exports.deleteBookRecord = deleteBookRecord;
-const deleteAllBooksRecord = async () => {
-    const connection = await db_1.default.getConnection();
+export const deleteAllBooksRecord = async () => {
+    const connection = await db.getConnection();
     try {
         await connection.beginTransaction();
         // Remove dependent borrow history first
@@ -113,4 +102,3 @@ const deleteAllBooksRecord = async () => {
         connection.release();
     }
 };
-exports.deleteAllBooksRecord = deleteAllBooksRecord;

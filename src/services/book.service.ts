@@ -5,8 +5,8 @@ import {
     findAllBooks,
     findBookById,
     updateBookRecord
-} from "../models/book.model";
-import { BookCreateInput, BookRecord, BookUpdateInput } from "../interface/book.interface";
+} from "../models/book.model.js";
+import { BookCreateInput, BookRecord, BookUpdateInput } from "../interface/book.interface.js";
 
 const validateBook = (book: Partial<BookCreateInput> = {}) => {
     if (book.categoryId === undefined || Number.isNaN(Number(book.categoryId))) {

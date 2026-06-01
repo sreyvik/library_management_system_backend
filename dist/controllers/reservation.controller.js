@@ -1,16 +1,11 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const validation_1 = require("../utils/validation");
-const base_controller_1 = __importDefault(require("./base.controller"));
-const reservation_service_1 = __importDefault(require("../services/reservation.service"));
-class ReservationController extends base_controller_1.default {
+import { parseId } from "../utils/validation.js";
+import BaseController from "./base.controller.js";
+import ReservationService from "../services/reservation.service.js";
+export default class ReservationController extends BaseController {
     static async createReservation(req, res) {
         try {
             const { memberId, bookId, reservationDate } = req.body;
-            const result = await reservation_service_1.default.createReservation(memberId, bookId, reservationDate);
+            const result = await ReservationService.createReservation(memberId, bookId, reservationDate);
             res.status(201).json(result);
         }
         catch (error) {
@@ -19,12 +14,12 @@ class ReservationController extends base_controller_1.default {
     }
     static async getReservation(req, res) {
         try {
-            const id = (0, validation_1.parseId)(req.params.id);
+            const id = parseId(req.params.id);
             if (id === null) {
                 res.status(400).json({ success: false, message: "invalid reservation id" });
                 return;
             }
-            const result = await reservation_service_1.default.getReservationById(id);
+            const result = await ReservationService.getReservationById(id);
             res.status(200).json(result);
         }
         catch (error) {
@@ -33,7 +28,7 @@ class ReservationController extends base_controller_1.default {
     }
     static async listReservations(req, res) {
         try {
-            const result = await reservation_service_1.default.listReservations();
+            const result = await ReservationService.listReservations();
             res.status(200).json(result);
         }
         catch (error) {
@@ -42,13 +37,13 @@ class ReservationController extends base_controller_1.default {
     }
     static async updateReservation(req, res) {
         try {
-            const id = (0, validation_1.parseId)(req.params.id);
+            const id = parseId(req.params.id);
             if (id === null) {
                 res.status(400).json({ success: false, message: "invalid reservation id" });
                 return;
             }
             const { memberId, bookId, reservationDate, status } = req.body;
-            const result = await reservation_service_1.default.updateReservation(id, memberId, bookId, reservationDate, status);
+            const result = await ReservationService.updateReservation(id, memberId, bookId, reservationDate, status);
             res.status(200).json(result);
         }
         catch (error) {
@@ -57,12 +52,12 @@ class ReservationController extends base_controller_1.default {
     }
     static async deleteReservation(req, res) {
         try {
-            const id = (0, validation_1.parseId)(req.params.id);
+            const id = parseId(req.params.id);
             if (id === null) {
                 res.status(400).json({ success: false, message: "invalid reservation id" });
                 return;
             }
-            const result = await reservation_service_1.default.deleteReservation(id);
+            const result = await ReservationService.deleteReservation(id);
             res.status(200).json(result);
         }
         catch (error) {
@@ -71,7 +66,7 @@ class ReservationController extends base_controller_1.default {
     }
     static async deleteAllReservations(req, res) {
         try {
-            const result = await reservation_service_1.default.deleteAllReservations();
+            const result = await ReservationService.deleteAllReservations();
             res.status(200).json(result);
         }
         catch (error) {
@@ -79,4 +74,3 @@ class ReservationController extends base_controller_1.default {
         }
     }
 }
-exports.default = ReservationController;

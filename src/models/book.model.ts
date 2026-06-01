@@ -1,5 +1,5 @@
-import db from "../configs/db";
-import { BookCreateInput, BookRecord, BookUpdateInput } from "../interface/book.interface";
+import db from "../configs/db.js";
+import { BookCreateInput, BookRecord, BookUpdateInput } from "../interface/book.interface.js";
 
 const BASE_SELECT = `
     SELECT

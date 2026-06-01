@@ -5,9 +5,9 @@ import {
     getMemberById,
     getMembers,
     updateMember
-} from "../services/member.service";
-import { parseId } from "../utils/validation";
-import { sendSuccess, sendError } from "../utils/response";
+} from "../services/member.service.js";
+import { parseId } from "../utils/validation.js";
+import { sendSuccess, sendError } from "../utils/response.js";
 
 export const listMembers = async (req: Request, res: Response): Promise<Response> => {
     try {

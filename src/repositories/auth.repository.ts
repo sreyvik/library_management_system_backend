@@ -1,6 +1,6 @@
-import db from "../configs/db";
-import { IUser } from "../interface/user.interface";
-import { BaseRepository } from "./base.repository";
+import db from "../configs/db.js";
+import { IUser } from "../interface/user.interface.js";
+import { BaseRepository } from "./base.repository.js";
 
 export class AuthRepository extends BaseRepository<IUser> {
 
